@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      lang="en"
+      layout:decorate="LayoutSup">
+<head>
+    <meta charset="UTF-8">
+
+    <title th:if="${Internship}"
+           th:text="${'Internship ID '+ Internship.id +' ['+Internship.student.firstName + ' ' + Internship.student.lastName + '] | EMSIStage'}"></title>
+
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+    <link href="/css/toastr.min.css" rel="stylesheet">
+    <style type="text/css">
+        .nav-pills .nav-link {
+            border-radius: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--Custom css-->
+    <style type="text/css">
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            background-color: #388e3c !important;
+            color: white !important;
+        }
+
+        .nav-item.border.border-primary {
+            border-color: #388e3c !important;
+        }
+
+        .nav-link {
+            color: #388e3c !important;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]), .md-form input[type="datetime-local"]:focus:not([readonly]), .md-form input[type="email"]:focus:not([readonly]), .md-form input[type="number"]:focus:not([readonly]), .md-form input[type="password"]:focus:not([readonly]), .md-form input[type="search-md"]:focus:not([readonly]), .md-form input[type="search"]:focus:not([readonly]), .md-form input[type="tel"]:focus:not([readonly]), .md-form input[type="text"]:focus:not([readonly]), .md-form input[type="time"]:focus:not([readonly]), .md-form input[type="url"]:focus:not([readonly]), .md-form textarea.md-textarea:focus:not([readonly]) {
+            -webkit-box-shadow: 0 1px 0 0 #388e3c;
+            box-shadow: 0 1px 0 0 #388e3c;
+            border-bottom: 1px solid #388e3c;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]) + label, .md-form input[type="datetime-local"]:focus:not([readonly]) + label, .md-form input[type="email"]:focus:not([readonly]) + label, .md-form input[type="number"]:focus:not([readonly]) + label, .md-form input[type="password"]:focus:not([readonly]) + label, .md-form input[type="search-md"]:focus:not([readonly]) + label, .md-form input[type="search"]:focus:not([readonly]) + label, .md-form input[type="tel"]:focus:not([readonly]) + label, .md-form input[type="text"]:focus:not([readonly]) + label, .md-form input[type="time"]:focus:not([readonly]) + label, .md-form input[type="url"]:focus:not([readonly]) + label, .md-form textarea.md-textarea:focus:not([readonly]) + label {
+
+            color: #388e3c;
+
+        }
+
+        .card {
+            box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
+        }
+
+        .card .card-header p {
+            margin: 0;
+        }
+
+        .card .avatar {
+            max-width: 6em;
+            max-height: 6em;
+            margin-top: -4em;
+            border: 4px solid white;
+            border-radius: 50%;
+            background: white;
+        }
+    </style>
+    <div class="container my-3">
+        <div class="card">
+            <h5 class="card-header">Internship Information</h5>
+            <div class="card-body">
+
+                <div th:if="${Internship==null}" class="alert alert-danger" role="alert">
+                    There is no Internship with this ID
+                </div>
+
+                <!--Internship-->
+                <div th:if="${Internship}" class="row justify-content-center mt-3">
+                    <!--Internship-->
+                    <div class="col sm-12 col-md-8 col-lg-6 mt-3 mb-5">
+                        <div class="rotate-container">
+                            <div class="card card-front text-center">
+                                <div class="card-block">
+                                    <i class="avatar c-purple-500 fas fa-briefcase fa-5x"></i>
+                                    <h3 class="card-title">Internship</h3>
+                                    <div class="layers bd bgc-white py-4">
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="id" class="col-sm-4 col-form-label">ID</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="id"
+                                                       th:value="${Internship.id}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="Type" class="col-sm-4 col-form-label">Type</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="Type"
+                                                       th:value="${Internship.type}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="startDate" class="col-sm-4 col-form-label">Start Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="startDate"
+                                                       th:value="${Internship.dateFrom}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="Duration" class="col-sm-4 col-form-label">Duration</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="Duration"
+                                                       th:value="${Internship.duration}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="endDate" class="col-sm-4 col-form-label">End Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="endDate"
+                                                       th:value="${Internship.dateTo}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<button class="btn waves-effect m-0 btn-block student-btn-rotate"
+                                            style="background-color: #9c27b0 !important;">Manage &nbsp; <i
+                                            class="fa fa-long-arrow-right"></i></button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Organization & Student-->
+                <div th:if="${Internship}" class="row justify-content-center mt-3">
+                    <!--Organization-->
+                    <div class="col sm-12 col-md-8 col-lg-5 mt-3 mb-5">
+                        <div class="rotate-container">
+                            <div class="card card-front text-center">
+                                <div class="card-block">
+                                    <i class="avatar c-light-blue-500 fas fa-building fa-5x"></i>
+                                    <h3 class="card-title">Organization</h3>
+                                    <div class="layers bd bgc-white py-4">
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="OrgName" class="col-sm-4 col-form-label">Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="OrgName"
+                                                       th:value="${Internship.organization.name}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="OrgAct" class="col-sm-4 col-form-label">Activity</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="OrgAct"
+                                                       th:value="${Internship.organization.activity}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="city" class="col-sm-4 col-form-label">City</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="city"
+                                                       th:value="${Internship.organization.city}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<button class="btn waves-effect m-0 btn-block student-btn-rotate"
+                                            style="background-color: #9c27b0 !important;">Manage &nbsp; <i
+                                            class="fa fa-long-arrow-right"></i></button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Student-->
+                    <div class="col sm-12 col-md-8 col-lg-5 mt-3 mb-5">
+                        <div class="rotate-container">
+                            <div  class="card card-front text-center">
+                                <div class="card-block">
+                                    <i class="c-green-500 avatar fas fa-user-graduate fa-5x"></i>
+                                    <h3 class="card-title">Student</h3>
+                                    <div class="layers bd bgc-white py-4">
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="Mat" class="col-sm-4 col-form-label">Mat</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="Mat"
+                                                       th:value="${Internship.student.mat}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="Name" class="col-sm-4 col-form-label">Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="Name"
+                                                       th:value="${Internship.student.firstName+' '+Internship.student.lastName}">
+                                            </div>
+                                        </div>
+                                        <!--<div style="width: 100%;" class="form-group row">
+                                            <label for="startDate" class="col-sm-4 col-form-label">Start Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="startDate"
+                                                       th:value="${Internship.dateFrom}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="Duration" class="col-sm-4 col-form-label">Duration</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="Duration"
+                                                       th:value="${Internship.duration}">
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;" class="form-group row">
+                                            <label for="endDate" class="col-sm-4 col-form-label">End Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" id="endDate"
+                                                       th:value="${Internship.dateTo}">
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="btn-group btn-block" style="height: 52px;">
+                                        <a th:href="@{'http://chat.emsistage.aski.me/direct/'+${Internship.student.username}}"
+                                           class="btn btn-dark-green waves-effect m-0 btn-block student-btn-rotate"
+                                                style="background-color: #4caf50 !important;display: flex !important;flex-direction: column;justify-content: center;">
+                                            <i class="fas fa-envelope"></i>&nbsp;
+                                            Contact
+                                        </a>
+                                        <a th:href="@{/supervisor/student(id=${Internship.student.mat})}"
+                                           class="btn btn-dark-green waves-effect m-0 btn-block student-btn-rotate"
+                                                style="background-color: #4caf50 !important;display: flex !important;flex-direction: column;justify-content: center;">More Information &nbsp; <i
+                                                class="fas fa-info-circle"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <!--Password generator-->
+        <script th:src="@{/js/jquery-password-generator-plugin.min.js}"></script>
+        <script th:src="@{/js/toastr.min.js}"></script>
+        <script>
+            $(document).ready(function () {
+
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

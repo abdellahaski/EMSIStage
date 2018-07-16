@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      lang="en"
+      layout:decorate="LayoutSup">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Dashboard | EMSIStage</title>
+
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+    <link href="/css/toastr.min.css" rel="stylesheet">
+    <style type="text/css">
+        .nav-pills .nav-link {
+            border-radius: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--Custom css-->
+    <style type="text/css">
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            background-color: #388e3c !important;
+            color: white !important;
+        }
+
+        .nav-item.border.border-primary {
+            border-color: #388e3c !important;
+        }
+
+        .nav-link {
+            color: #388e3c !important;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]), .md-form input[type="datetime-local"]:focus:not([readonly]), .md-form input[type="email"]:focus:not([readonly]), .md-form input[type="number"]:focus:not([readonly]), .md-form input[type="password"]:focus:not([readonly]), .md-form input[type="search-md"]:focus:not([readonly]), .md-form input[type="search"]:focus:not([readonly]), .md-form input[type="tel"]:focus:not([readonly]), .md-form input[type="text"]:focus:not([readonly]), .md-form input[type="time"]:focus:not([readonly]), .md-form input[type="url"]:focus:not([readonly]), .md-form textarea.md-textarea:focus:not([readonly]) {
+            -webkit-box-shadow: 0 1px 0 0 #388e3c;
+            box-shadow: 0 1px 0 0 #388e3c;
+            border-bottom: 1px solid #388e3c;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]) + label, .md-form input[type="datetime-local"]:focus:not([readonly]) + label, .md-form input[type="email"]:focus:not([readonly]) + label, .md-form input[type="number"]:focus:not([readonly]) + label, .md-form input[type="password"]:focus:not([readonly]) + label, .md-form input[type="search-md"]:focus:not([readonly]) + label, .md-form input[type="search"]:focus:not([readonly]) + label, .md-form input[type="tel"]:focus:not([readonly]) + label, .md-form input[type="text"]:focus:not([readonly]) + label, .md-form input[type="time"]:focus:not([readonly]) + label, .md-form input[type="url"]:focus:not([readonly]) + label, .md-form textarea.md-textarea:focus:not([readonly]) + label {
+
+            color: #388e3c;
+
+        }
+
+        .fa.prefix.active {
+            color: #388e3c !important;
+        }
+
+        /****************************************/
+
+        /* Card styles for rotation */
+        .rotate-container {
+            position: relative;
+        }
+        .rotate-container .card-front, .rotate-container .card-back {
+            width: 100%;
+            height: 100%;
+            -webkit-transform: perspective(600px) rotateY(0deg);
+            transform: perspective(600px) rotateY(0deg);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transition: all 0.5s linear 0s;
+        }
+        .rotate-container .card-back {
+            -webkit-transform: perspective(1600px) rotateY(180deg);
+            transform: perspective(1600px) rotateY(180deg);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .rotate-container .rotate-card-front {
+            -webkit-transform: perspective(1600px) rotateY(-180deg);
+            transform: perspective(1600px) rotateY(-180deg);
+        }
+        .rotate-container .rotate-card-back {
+            -webkit-transform: perspective(1600px) rotateY(0deg);
+            transform: perspective(1600px) rotateY(0deg);
+        }
+
+        /* Modified card styles */
+        .card {
+            box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
+        }
+        .card .card-header p {
+            margin: 0;
+        }
+
+        .card .avatar {
+            max-width: 6em;
+            max-height: 6em;
+            margin-top: -4em;
+            border: 4px solid white;
+            border-radius: 50%;
+            background: white;
+        }
+        .card .btn {
+            margin-bottom: 1em;
+            cursor: pointer;
+        }
+
+
+    </style>
+    <div class="container my-3">
+
+
+
+
+        <div class="container">
+            <div class="row justify-content-center mt-3">
+                <!--Student-->
+                <div class="col sm-12 col-md-8 col-lg-5 mt-5 mb-5">
+                    <div class="rotate-container">
+                        <div id="student-card-front" class="card card-front text-center">
+                            <div class="card-block">
+                                <i class="c-green-500 avatar fas fa-user-graduate fa-5x"></i>
+                                <h3 class="card-title">Students</h3>
+                                <div class="layers bd bgc-white p-20">
+                                    <div class="layer w-100 mB-10">
+                                        <h6 class="lh-1">Total Students</h6>
+                                    </div>
+                                    <div class="layer w-100">
+                                        <div class="peers ai-sb fxw-nw">
+                                            <div class="peer peer-greed">
+                                                <span id="sparklinedash"><canvas style="display: inline-block; width: 45px; height: 20px; vertical-align: top;" width="45" height="20"></canvas></span>
+                                            </div>
+                                            <div class="peer">
+                                                <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500" th:text="${StudentCount}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-dark-green waves-effect m-0 btn-block student-btn-rotate" style="background-color: #4caf50 !important;">Manage &nbsp;       <i class="fa fa-long-arrow-right"></i></button>
+                            </div>
+                        </div>
+                        <div id="student-card-back" class="card card-back text-center">
+                            <div class="card-header">
+                                <p>Manage Students</p>
+                            </div>
+                            <div class="card-block">
+                                <div class="mt-4">
+                                    <a th:href="@{/supervisor/liststudents}" style="color: #4caf50 !important;border-color: #4caf50 !important;"
+                                            class="btn btn-outline-primary waves-effect">
+                                        Students List &nbsp;
+                                        <i class="c-green-500 fas fa-search"></i>
+                                    </a>
+                                    <!--<a th:href="@{/supervisor/addstudent}" style="color: #4caf50 !important;border-color: #4caf50 !important;"
+                                            class="btn btn-outline-primary waves-effect">
+                                        Add a Student &nbsp;
+                                        <i class="c-green-500 fas fa-user-plus"></i>
+                                    </a>-->
+                                </div>
+                                <button class="btn btn-primary student-btn-rotate btn-block fixed-bottom m-0"
+                                        style="background-color: #4caf50 !important;">   <i class="fa fa-long-arrow-left"> </i>&nbsp; Back </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Internships-->
+                <div class="col sm-12 col-md-8 col-lg-5 mt-5 mb-5">
+                    <div class="rotate-container">
+                        <div id="internship-card-front" class="card card-front text-center">
+                            <div class="card-block">
+                                <i class="avatar c-purple-500 fas fa-briefcase fa-5x"></i>
+                                <h3 class="card-title">Internships</h3>
+
+                                <div class="layers bd bgc-white p-20">
+                                    <div class="layer w-100 mB-10">
+                                        <h6 class="lh-1">Total Internships</h6>
+                                    </div>
+                                    <div class="layer w-100">
+                                        <div class="peers ai-sb fxw-nw">
+                                            <div class="peer peer-greed">
+                                                <span id="sparklinedash2"><canvas style="display: inline-block; width: 45px; height: 20px; vertical-align: top;" width="45" height="20"></canvas></span>
+                                            </div>
+                                            <div class="peer">
+                                                <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500" th:text="${InternshipCount}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn waves-effect m-0 btn-block internship-btn-rotate"
+                                        style="background-color: #9c27b0 !important;">
+                                    Manage &nbsp;
+                                    <i class="fa fa-long-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="internship-card-back" class="card card-back text-center">
+                            <div class="card-header">
+                                <p>Manage Internships</p>
+                            </div>
+                            <div class="card-block">
+                                <div class="mt-4">
+                                    <a th:href="@{/supervisor/listinternships}" style="color: #9c27b0 !important;border-color: #9c27b0 !important;"
+                                       class="btn btn-outline-primary waves-effect">
+                                        Internships List &nbsp;
+                                        <i class="c-purple-500 fas fa-search"></i>
+                                    </a>
+                                    <!--<a th:href="@{/supervisor/addstudent}" style="color: #9c27b0 !important;border-color: #9c27b0 !important;"
+                                       class="btn btn-outline-primary waves-effect">
+                                        Add a Student &nbsp;
+                                        <i class="c-green-500 fas fa-user-plus"></i>
+                                    </a>-->
+                                </div>
+                                <button class="btn btn-primary internship-btn-rotate btn-block fixed-bottom m-0" style="background-color: #9c27b0 !important;">   <i class="fa fa-long-arrow-left"> </i>&nbsp; Back </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <!--Password generator-->
+        <script th:src="@{/js/jquery-password-generator-plugin.min.js}"></script>
+        <script th:src="@{/js/toastr.min.js}"></script>
+        <script>
+            $(document).ready(function () {
+                // For cards rotation
+                $('.student-btn-rotate').click(function(){
+                    $('.rotate-card-front').not('#student-card-front').removeClass('rotate-card-front');
+                    $('.rotate-card-back').not('#student-card-back').removeClass('rotate-card-back');
+
+                    $('#student-card-front').toggleClass(' rotate-card-front');
+                    $('#student-card-back').toggleClass(' rotate-card-back');
+                });
+                $('.internship-btn-rotate').click(function(){
+                    $('.rotate-card-front').not('#internship-card-front').removeClass('rotate-card-front');
+                    $('.rotate-card-back').not('#internship-card-back').removeClass('rotate-card-back');
+
+                    $('#internship-card-front').toggleClass(' rotate-card-front');
+                    $('#internship-card-back').toggleClass(' rotate-card-back');
+                });
+
+
+
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

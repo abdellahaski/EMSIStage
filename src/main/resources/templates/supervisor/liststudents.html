@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      lang="en"
+      layout:decorate="LayoutSup">
+<head>
+    <meta charset="UTF-8">
+    <title>Students List</title>
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+    <link href="/css/toastr.min.css" rel="stylesheet">
+    <style type="text/css">
+        .nav-pills .nav-link {
+            border-radius: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--Custom css-->
+    <style type="text/css">
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            background-color: #388e3c !important;
+            color: white !important;
+        }
+
+        .nav-item.border.border-primary {
+            border-color: #388e3c !important;
+        }
+
+        .nav-link {
+            color: #388e3c !important;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]), .md-form input[type="datetime-local"]:focus:not([readonly]), .md-form input[type="email"]:focus:not([readonly]), .md-form input[type="number"]:focus:not([readonly]), .md-form input[type="password"]:focus:not([readonly]), .md-form input[type="search-md"]:focus:not([readonly]), .md-form input[type="search"]:focus:not([readonly]), .md-form input[type="tel"]:focus:not([readonly]), .md-form input[type="text"]:focus:not([readonly]), .md-form input[type="time"]:focus:not([readonly]), .md-form input[type="url"]:focus:not([readonly]), .md-form textarea.md-textarea:focus:not([readonly]) {
+            -webkit-box-shadow: 0 1px 0 0 #388e3c;
+            box-shadow: 0 1px 0 0 #388e3c;
+            border-bottom: 1px solid #388e3c;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]) + label, .md-form input[type="datetime-local"]:focus:not([readonly]) + label, .md-form input[type="email"]:focus:not([readonly]) + label, .md-form input[type="number"]:focus:not([readonly]) + label, .md-form input[type="password"]:focus:not([readonly]) + label, .md-form input[type="search-md"]:focus:not([readonly]) + label, .md-form input[type="search"]:focus:not([readonly]) + label, .md-form input[type="tel"]:focus:not([readonly]) + label, .md-form input[type="text"]:focus:not([readonly]) + label, .md-form input[type="time"]:focus:not([readonly]) + label, .md-form input[type="url"]:focus:not([readonly]) + label, .md-form textarea.md-textarea:focus:not([readonly]) + label {
+
+            color: #388e3c;
+
+        }
+
+        .fa.prefix.active {
+            color: #388e3c !important;
+        }
+    </style>
+    <div class="container my-3">
+        <div class="card">
+            <h5 class="card-header">Students List</h5>
+            <div class="card-body">
+
+                <table id="dataTable" class="table table-striped table-bordered dataTable">
+                    <thead>
+                    <tr>
+                        <th>Mat</th>
+                        <th>First & Last Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Year</th>
+                        <th>Branch</th>
+                        <th></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="Student : ${listStudents}">
+                        <td th:text="${Student.mat}"></td>
+                        <td th:text="${Student.firstName + ' ' + Student.lastName}"></td>
+                        <td th:text="${Student.username}"></td>
+                        <td th:text="${Student.email}"></td>
+                        <td th:text="${Student.phone}"></td>
+                        <td th:text="${Student.year}"></td>
+                        <td th:text="${Student.branch}"></td>
+                        <td>
+                            <div class="btn-group btn-block">
+                            <!--<a class="btn  btn-dark-green waves-effect btn-block" target="_blank" th:if="${Student.internship}" th:href="@{'http://chat.emsistage.aski.me/direct/'+${Student.username}}">Contact</a>-->
+                                <a class="btn btn-dark-green waves-effect" target="_blank" th:href="@{/supervisor/student(id=${Student.mat})}"><i class="fas fa-info-circle"></i> Details</a>
+                                <a class="btn btn-dark-green waves-effect" target="_blank" th:href="@{'http://chat.emsistage.aski.me/direct/'+${Student.username}}">Contact <i class="fas fa-envelope"></i></a>
+
+                            </div>
+                        </td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+
+
+
+
+
+            </div>
+        </div>
+        <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <!--Password generator-->
+        <script th:src="@{/js/jquery-password-generator-plugin.min.js}"></script>
+        <script th:src="@{/js/toastr.min.js}"></script>
+        <script>
+            $(document).ready(function () {
+
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

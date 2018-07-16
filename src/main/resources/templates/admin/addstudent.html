@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      lang="en"
+      layout:decorate="layout01">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a student</title>
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+    <link href="/css/toastr.min.css" rel="stylesheet">
+    <style type="text/css">
+        .nav-pills .nav-link {
+            border-radius: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--Custom css-->
+    <style type="text/css">
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            background-color: #388e3c !important;
+            color: white !important;
+        }
+
+        .nav-item.border.border-primary {
+            border-color: #388e3c !important;
+        }
+
+        .nav-link {
+            color: #388e3c !important;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]), .md-form input[type="datetime-local"]:focus:not([readonly]), .md-form input[type="email"]:focus:not([readonly]), .md-form input[type="number"]:focus:not([readonly]), .md-form input[type="password"]:focus:not([readonly]), .md-form input[type="search-md"]:focus:not([readonly]), .md-form input[type="search"]:focus:not([readonly]), .md-form input[type="tel"]:focus:not([readonly]), .md-form input[type="text"]:focus:not([readonly]), .md-form input[type="time"]:focus:not([readonly]), .md-form input[type="url"]:focus:not([readonly]), .md-form textarea.md-textarea:focus:not([readonly]) {
+            -webkit-box-shadow: 0 1px 0 0 #388e3c;
+            box-shadow: 0 1px 0 0 #388e3c;
+            border-bottom: 1px solid #388e3c;
+        }
+
+        .md-form input[type="date"]:focus:not([readonly]) + label, .md-form input[type="datetime-local"]:focus:not([readonly]) + label, .md-form input[type="email"]:focus:not([readonly]) + label, .md-form input[type="number"]:focus:not([readonly]) + label, .md-form input[type="password"]:focus:not([readonly]) + label, .md-form input[type="search-md"]:focus:not([readonly]) + label, .md-form input[type="search"]:focus:not([readonly]) + label, .md-form input[type="tel"]:focus:not([readonly]) + label, .md-form input[type="text"]:focus:not([readonly]) + label, .md-form input[type="time"]:focus:not([readonly]) + label, .md-form input[type="url"]:focus:not([readonly]) + label, .md-form textarea.md-textarea:focus:not([readonly]) + label {
+
+            color: #388e3c;
+
+        }
+
+        .fa.prefix.active, .fas.prefix.active {
+            color: #388e3c !important;
+        }
+    </style>
+    <div class="container my-3">
+        <div class="card">
+            <h5 class="card-header">Add a Student</h5>
+            <div class="card-body">
+                        <p style="display: none" id="successMessage" th:utext="${successMessage}"></p>
+                        <p style="display: none" id="successStudentFirstName" th:utext="${Student.firstName}"></p>
+                        <p style="display: none" id="successStudentLastName" th:utext="${Student.lastName}"></p>
+                        <p style="display: none" id="successStudentEmail" th:utext="${Student.email}"></p>
+                        <p style="display: none" id="successStudentUsername" th:utext="${Student.username}"></p>
+                        <p style="display: none" id="successStudentPass" th:utext="${successStudentPass}"></p>
+                        <p style="display: none" id="loggedInAdminEmail" th:utext="${loggedInAdminEmail}"></p>
+
+                        <form th:action="@{/admin/addstudent}" method="post" th:object="${Student}">
+
+
+                            <div class="md-form">
+                                <i class="fas fa-id-card-alt prefix grey-text"></i>
+                                <input type="text" id="mat" value="" name="mat" class="form-control validate"
+                                       th:field="*{mat}" autocomplete="off" required readonly
+                                       onfocus="this.removeAttribute('readonly');">
+                                <label for="mat">Mat</label>
+                                <div class="validation-message alert alert-danger"
+                                     th:if="${#fields.hasErrors('mat')}" th:errors="*{mat}">
+                                </div>
+                            </div>
+
+
+
+
+
+                            <!-- Material input text -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="md-form">
+                                        <i class="fa fa-id-card prefix grey-text"></i>
+                                        <input type="text" id="firstName" name="firstName" class="form-control validate"
+                                               th:field="*{firstName}" autocomplete="off" required>
+                                        <label for="firstName">First Name</label>
+                                        <div class="validation-message alert alert-danger"
+                                             th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Material input text -->
+                                    <div class="md-form">
+                                        <!--<i class="fa fa-id-card prefix grey-text"></i>-->
+                                        <input type="text" id="lastName" name="lastName" class="form-control validate"
+                                               th:field="*{lastName}" autocomplete="off" required>
+                                        <label for="lastName">Last Name</label>
+                                        <div class="validation-message alert alert-danger"
+                                             th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="md-form">
+                                <i class="fas fa-phone prefix grey-text"></i>
+                                <input type="text" id="phone" name="phone" class="form-control validate"
+                                       th:field="*{phone}" autocomplete="off" required readonly
+                                       onfocus="this.removeAttribute('readonly');">
+                                <label for="phone">Phone</label>
+                                <div class="validation-message alert alert-danger"
+                                     th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
+                                </div>
+                            </div>
+
+
+
+                            <!-- Material input email -->
+                            <div class="md-form">
+                                <i class="fa fa-envelope prefix grey-text"></i>
+                                <input type="email" id="email" name="email" class="form-control validate"
+                                       th:field="*{email}" required autocomplete="off" readonly
+                                       onfocus="this.removeAttribute('readonly');">
+                                <label for="email">Email</label>
+                                <div class="validation-message alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                                     th:errors="*{email}">
+                                </div>
+                            </div>
+                            <!-- Material input text -->
+                            <div class="md-form">
+                                <i class="fa fa-user prefix grey-text"></i>
+                                <input type="text" id="username" name="username" class="form-control validate"
+                                       th:field="*{username}" autocomplete="off" required readonly
+                                       onfocus="this.removeAttribute('readonly');">
+                                <label for="username">Username</label>
+                                <div class="validation-message alert alert-danger"
+                                     th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="md-form">
+                                        <i class="fa fa-lock prefix grey-text"></i>
+                                        <input type="password" name="password" id="password"
+                                               class="form-control validate" th:field="*{password}"
+                                               aria-describedby="passwordHelp" required autocomplete="off" readonly
+                                               onfocus="this.removeAttribute('readonly');">
+                                        <label for="password">Password</label>
+                                        <small id="passwordHelp" class="form-text text-muted">
+                                            Password will be sent the logged in Admin and the Student emails
+                                        </small>
+                                        <div class="validation-message alert alert-danger"
+                                             th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group-btn md-form">
+                                        <button class="btn btn-dark-green waves-effect m-0 btn-block"
+                                                id="generatePassBtn" type="button">Generate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Year Radio box-->
+                            <div class="btn-group" data-toggle="buttons">
+
+                                <span class="input-group-text" id="inputGroup-sizing-default">
+                                    <i class="fas fa-calendar-alt pr-2"></i>Year:</span>
+
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="1" th:field="*{year}"
+                                           th:checked> 1st Year
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="2" name="year"
+                                           th:field="*{year}"> 2nd Year
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="3" th:field="*{year}"> 3rd Year
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="4" th:field="*{year}"> 4th Year
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="5" th:field="*{year}"> 5th Year
+                                </label>
+                                <div class="validation-message alert alert-danger" th:if="${#fields.hasErrors('year')}"
+                                     th:errors="*{year}">
+                                </div>
+                            </div>
+
+                            <!--Branch Radio box-->
+                            <div class="btn-group mt-4" data-toggle="buttons">
+
+                                <span class="input-group-text" id="inputGroup-sizing-sm">
+                                    <i class="fas fa-code-branch mr-2"></i>Branch:</span>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="IIR" th:field="*{branch}"
+                                           th:checked> IIR
+                                </label>
+
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="GI" name="branch"
+                                           th:field="*{branch}"> GI
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="IAII" th:field="*{branch}"> IAII
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="GC" th:field="*{branch}"> GC
+                                </label>
+                                <label class="btn btn-default btn-dark-green form-check-label"
+                                       style="padding: 10px 33px;">
+                                    <input class="form-check-input" type="radio" value="IFA" th:field="*{branch}"> IFA
+                                </label>
+
+
+                            </div>
+                            <div class="validation-message alert alert-danger" th:if="${#fields.hasErrors('branch')}"
+                                 th:errors="*{branch}">
+                            </div>
+
+
+                            <div class="text-center mt-4">
+                                <button class="btn  btn-dark-green waves-effect btn-block btn-lg" type="submit">Submit
+                                </button>
+                            </div>
+                            <div class="text-center mt-4 col-md-4 mx-auto">
+                                <button id="clearbtn" class="btn  btn-dark-green waves-effect btn-block btn-lg" type="reset">Clear
+                                </button>
+                            </div>
+                        </form>
+
+
+
+            </div>
+        </div>
+        <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <!--Password generator-->
+        <script th:src="@{/js/jquery-password-generator-plugin.min.js}"></script>
+        <script th:src="@{/js/toastr.min.js}"></script>
+        <script>
+            var password;
+            $(document).ready(function () {
+
+                $("#mat").val('')
+                    .removeClass("valid")
+                    .siblings().removeClass("active");
+
+
+                $firstName = $("#firstName");
+                $lastName = $("#lastName");
+                $username = $("#username");
+                $password = $("#password");
+
+
+                $("#generatePassBtn").click(function () {
+                    password = $.passGen({
+                        'length': 10,
+                        'numeric': true,
+                        'lowercase': true,
+                        'uppercase': true,
+                        'special': false
+                    });
+                    $password.val(password).attr('type', 'text').focus();
+                });
+                $password.focusout(function () {
+                    $password.attr('type', 'password');
+                }).focusin(function () {
+                    $password.attr('type', 'text');
+                });
+                $firstName.on("change keyup paste click", function () {
+                    var firstNameVal = $firstName.val().replace(/\s\s+/g, ".").replace(" ", ".").toLowerCase();
+                    var lastNameVal = $lastName.val().replace(/\s\s+/g, ".").replace(" ", ".").toLowerCase();
+                    if (firstNameVal) {
+                        $username.val(firstNameVal);
+                        if (lastNameVal) {
+                            $username.val(firstNameVal + "." + lastNameVal);
+                        }
+                        $username.siblings().addClass("active");
+                    }
+                    else if (lastNameVal) {
+                        $username.val(lastNameVal);
+                        $username.siblings().addClass("active");
+                    }
+                });
+                $lastName.on("change keyup paste click", function () {
+                    var firstNameVal = $firstName.val().replace(/\s\s+/g, ".").replace(" ", ".");
+                    var lastNameVal = $lastName.val().replace(/\s\s+/g, ".").replace(" ", ".");
+                    if (lastNameVal) {
+                        $username.val(lastNameVal);
+                        if (firstNameVal) {
+                            $username.val(firstNameVal + "." + lastNameVal);
+                        }
+                        $username.siblings().addClass("active");
+                    }
+                    else if (firstNameVal) {
+                        $username.val(firstNameVal);
+                        $username.siblings().addClass("active");
+                    }
+                });
+
+
+                $("#clearbtn").click(function(event) {
+                    event.preventDefault();
+                    $(':input','form')
+                        .not(':button, :submit, :reset, :hidden')
+                        .val('')
+                        .removeClass("valid")
+                        .prop('checked', false)
+                        .prop('selected', false)
+                        .siblings().removeClass("active");
+                });
+
+                //----------------------------------------------------------------------------
+                var simpleToastrOpt = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "newestOnTop": false,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "10000",
+                    "extendedTimeOut": "8000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                var permToastrOpt = {
+                    "closeButton": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "newestOnTop": false,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "0",
+                    "extendedTimeOut": "0",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+
+                var $successMessage = $("#successMessage");
+                if ($successMessage.html()) {
+                    toastr.options = simpleToastrOpt;
+                    toastr["success"]($successMessage.html(), "Success");
+                    toastr.options = permToastrOpt;
+                    //Showing sending email toastr...
+                    var studentEmailToast = toastr["info"]("Sending an email to the student ...");
+                    var adminEmailToast = toastr["info"]("Sending an email to the admin ...");
+
+                    //Getting information ready
+                    var loggedInAdminEmail = $("#loggedInAdminEmail").html();
+                    var firstName = $("#successStudentFirstName").html();
+                    var lastName = $("#successStudentLastName").html();
+                    var email = $("#successStudentEmail").html();
+                    var pass = $("#successStudentPass").html();
+                    var username = $("#successStudentUsername").html();
+                    var subject = "EMSIStage Account Information";
+                    var text = "Hi " + firstName + " " + lastName + ",\n" + "Your account at EMSIStage website has been successfully created." +
+                        "\n\nYour login information : \nUsername: " + username + "\nPassword: " + pass;
+                    studentJsonObjMail = {};
+                    studentJsonObjMail['to'] = email;
+                    studentJsonObjMail['subject'] = subject;
+                    studentJsonObjMail['text'] = text;
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "/admin/mailer",
+                        data: JSON.stringify(studentJsonObjMail),
+                        dataType: 'json',
+                        cache: false,
+                        timeout: 600000,
+                        success: function (data) {
+
+                            if (data.status === "Done") {
+                                studentEmailToast.fadeOut();
+                                toastr.options = simpleToastrOpt;
+                                var msg = "Email sent to the student " + firstName + " " + lastName + " containing his login information.";
+                                toastr["success"](msg, "Success");
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e);
+                            studentEmailToast.fadeOut();
+                            toastr["error"]("Error sending an email to the student.", "error");
+                        }
+                    });
+
+                    //Sending an email to the admin
+                    //preparing the email...
+                    var adminText = "A new Student account has been created successfully for " + firstName + " " + lastName +
+                        "\n\nLogin information:\nUsername: " + username + "\nPassword: " + pass;
+                    adminJsonObjMail = {};
+                    adminJsonObjMail['to'] = loggedInAdminEmail;
+                    adminJsonObjMail['subject'] = "[EMSIStage] New Student Account Created";
+                    adminJsonObjMail['text'] = adminText;
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "/admin/mailer",
+                        data: JSON.stringify(adminJsonObjMail),
+                        dataType: 'json',
+                        cache: false,
+                        timeout: 600000,
+                        success: function (data) {
+
+                            if (data.status === "Done") {
+                                adminEmailToast.fadeOut();
+                                toastr.options = simpleToastrOpt;
+                                var msg = "Email sent to the admin containing the student login information.";
+                                toastr["success"](msg, "Success");
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e);
+                            adminEmailToast.fadeOut();
+                            toastr["error"]("Error sending an email to the admin.", "error");
+                        }
+                    });
+                }
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>
