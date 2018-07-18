@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrganizationRepository extends JpaRepository<Organization, Integer> {
 /**
- * TODO
+ *
  * ddsdsqdqsd
+ *
+ * 545464
  */
+
     
 }
