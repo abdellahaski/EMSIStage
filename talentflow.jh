@@ -1,0 +1,149 @@
+entity User {
+    username String
+    password String
+    email String
+    active Boolean
+    firstName String
+    lastName String
+}
+
+entity Supervisor {  
+}
+entity Recruter {  
+}
+entity Manager {  
+	pole String
+}
+entity Assistant {  
+}
+entity Admin {  
+}
+
+entity Candidate {
+	firstName String,
+    lastName String,
+    email String,
+    phone String
+}
+
+entity SocialNetwork {
+	id Long,
+    name String,
+    url String
+}
+
+entity Candidature {
+	id Long,
+    date LocalDate,
+    source String,
+    availability LocalDate,
+    currentEmployer String,
+    currentJob String,
+    experienceYears Integer,
+    desiredSalary Double,
+    finalDecision String
+}
+
+entity Stage {
+	id Long,
+    name String,
+    date LocalDate,
+    status String,
+    decision String,
+    order Integer,
+}
+
+entity Mission {
+ 	id Long
+ 	profile String
+ 	etp Integer
+ 	date LocalDate
+ 	sentCVs Integer
+ 	validatedCVsByManager Integer
+ 	status String
+ 	comment String
+
+}
+entity Report {
+	 id Long
+	 initialOpinion String
+	 date LocalDate
+	 decision String
+	 decisionDetail String
+}
+entity Question {
+	id Long
+	title Integer
+	subTitle String
+	label String
+	answerType String
+    active Boolean
+}
+entity Entry {
+	id Long
+	date LocalDate
+	staffing String
+	area Integer
+	contract Boolean
+}
+entity Comment {
+	id Long
+	text String
+	date LocalDate
+}
+
+entity Tag {
+	id Long,
+    name String
+}
+
+entity ChoiceTemplate {
+	id Long
+    choice String
+}
+
+entity ReportQuestion {
+	id Long
+}
+
+entity Answer {
+	id Long
+    value String
+}
+
+relationship OneToOne {
+	Candidature{candidate} to Candidate{candidature}
+    Stage{report} to Report{stage}
+    Candidate{entry} to Entry{candidature}
+}
+
+relationship OneToMany {
+	Candidature{stages} to Stage{candidature}
+    Recruter{candidatures} to Candidature{recruter}
+    Candidate{socialNetwoks} to SocialNetwork{candidate}
+    Manager{missions} to Mission{manager}
+    Mission{candidatures} to Candidature{mission}
+    Recruter{missions} to Mission{Recruter}
+    Candidature{comments} to Comment{candidature}
+    Report{reportQuestions} to ReportQuestion{report}
+    Question{choiceTemplates} to ChoiceTemplate{question}
+    ReportQuestion{answers} to Answer{reportQuestion}
+}
+
+
+relationship ManyToOne {
+	Stage{recruter} to Recruter{stages}
+    Stage{manager} to Manager{stages}
+    Comment{user} to User
+    Question{reportQuestions} to ReportQuestion{question}
+}
+
+
+relationship ManyToMany {
+	Candidature{tags} to Tag{candidatures}
+}
+
+
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
